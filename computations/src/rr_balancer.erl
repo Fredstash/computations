@@ -250,13 +250,13 @@ filled_worker_list_start_test_()->
 %% handle_event.
 %%
 handle_event_test_() ->
-    [?_assertMatch({reply,sue,[bob,sally,grace,sue]},
+    [?_assertEqual({reply,sue,[bob,sally,grace,sue]},
         rr_balancer:handle_call(next_id, some_from, [sue,bob,sally,grace])),
      %test if list is empty
-     ?_assertMatch({reply,empty_list_error,[]},
+     ?_assertEqual({reply,empty_list_error,[]},
         rr_balancer:handle_call(next_id, some_from, [])),
      %test if state is not a list
-     ?_assertMatch({reply,non_list_error,[]},
+     ?_assertEqual({reply,non_list_error,[]},
         rr_balancer:handle_call(next_id, some_from, true))
 
     ].
