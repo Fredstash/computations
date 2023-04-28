@@ -104,13 +104,13 @@ init(Start_info) ->
     %% The pattern for the value of this function is, 
     %% {ok,{{restart_strategy,intensity,period},children}}
     SupFlags = #{strategy => one_for_one, intensity => 1, period => 5},
-    % ChildSpecs = [#{id => ch3,
-    %                 start => {ch3, start_link, []},
-    %                 restart => permanent,
-    %                 shutdown => brutal_kill,
-    %                 type => worker,
-    %                 modules => [ch3]}],
-    {ok, {SupFlags, Start_info}}.
+    ChildSpecs = [#{id => ch3,
+                    start => {ch3, start_link, []},
+                    restart => permanent,
+                    shutdown => brutal_kill,
+                    type => worker,
+                    modules => [ch3]}],
+    {ok, {SupFlags, ChildSpecs}}.
 
     
 
@@ -136,9 +136,8 @@ generate_spec(Module,Name,Type)->
 %%                                                  % gen_event manager with some unknown types of gen_event handler
 %%                                                  % modules to be added later.
         #{id => Name,
-          start => {Module,start,[local,Name,[]]},% This template forces local registration of the child and
-                                                  % forces it to startup without parameters. 
-          restart => transient,
-          shutdown => 2000,
-          type => Type,
-          modules => [Module]}.
+            start => {Module,start,[local,Name,[]]},% This template forces local registration of the child and                                    % forces it to startup without parameters. 
+            restart => permanent,
+            shutdown => 2000,
+            type => worker,
+            modules => [Module]}.
