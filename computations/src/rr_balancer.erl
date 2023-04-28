@@ -13,8 +13,10 @@
 %%%
 %%% @end
 %%
--module(rr_selctor).
+-module(rr_balancer).
 -behaviour(gen_server).
+
+-define(SERVER, ?MODULE).
 
 %% API
 -export([start/1,start/3,stop/0,next/0]).
@@ -111,8 +113,8 @@ next()-> gen_server:call(?MODULE, next_id).
 %% @end
 %%--------------------------------------------------------------------
 
--spec next(Name) -> term().
-next()-> gen_server:call(Name, next_id).
+% -spec next(Name) -> term().
+next(Name)-> gen_server:call(Name, next_id).
 
 %%%===================================================================
 %%% gen_server callbacks
